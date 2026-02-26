@@ -11,6 +11,8 @@ import { StorageService } from '../../../shared/services/storage.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { ListingService } from '../../../shared/services/listing.service';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 
 @Component({
@@ -29,6 +31,7 @@ export class ProductsListComponent implements OnInit {
   isSuperadmin: boolean;
   selectedStore: String = '';
   searchTerm: string = '';
+  private searchSubject = new Subject<string>();
   // paginator
   perPage = 20;
   currentPage = 1;
@@ -72,6 +75,13 @@ export class ProductsListComponent implements OnInit {
       this.getList();
     });
 
+    // Setup debounced search
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(searchTerm => {
+      this.applySearch();
+    });
 
     //ng2-smart-table server side filter //list in field
     this.source.onChanged().subscribe((change) => {
@@ -272,7 +282,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   onSearch() {
-    this.applySearch();
+    this.searchSubject.next(this.searchTerm);
   }
 
   clearSearch() {
