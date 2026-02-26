@@ -275,6 +275,11 @@ export class ProductsListComponent implements OnInit {
     this.applySearch();
   }
 
+  clearSearch() {
+    this.searchTerm = '';
+    this.applySearch();
+  }
+
   applySearch() {
     if (!this.searchTerm || this.searchTerm.trim() === '') {
       this.filteredProducts = [...this.products];

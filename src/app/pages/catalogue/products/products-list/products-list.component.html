@@ -17,6 +17,15 @@
               name="searchTerm"
               placeholder="{{ 'PRODUCT.SEARCH_PLACEHOLDER' | translate }}"
             />
+            <button 
+              *ngIf="searchTerm" 
+              type="button" 
+              class="clear-button"
+              (click)="clearSearch()"
+              title="{{ 'PRODUCT.CLEAR_SEARCH' | translate }}"
+            >
+              ×
+            </button>
           </div>
         </div>
         <div class="filter_right_section">
