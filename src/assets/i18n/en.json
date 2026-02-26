@@ -284,7 +284,8 @@
     "PRODUCT_CREATED": "Product created.",
     "PRODUCT_REMOVED": "Product removed.",
     "DEFINITION": "Product definition",
-    "SELECT": "Select product"
+    "SELECT": "Select product",
+    "SEARCH_PLACEHOLDER": "Search by name, SKU or description..."
   },
   "PRODUCT_ATTRIBUTES": {
     "PRODUCT_OPTIONS_ATTRIBUTES": "Product options / attributes",

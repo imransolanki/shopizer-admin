@@ -20,6 +20,7 @@ import { ListingService } from '../../../shared/services/listing.service';
 })
 export class ProductsListComponent implements OnInit {
   products = [];
+  filteredProducts = [];
   source: LocalDataSource = new LocalDataSource();
   listingService: ListingService;
   loadingList = false;
@@ -27,6 +28,7 @@ export class ProductsListComponent implements OnInit {
   stores = [];
   isSuperadmin: boolean;
   selectedStore: String = '';
+  searchTerm: string = '';
   // paginator
   perPage = 20;
   currentPage = 1;
@@ -90,7 +92,8 @@ export class ProductsListComponent implements OnInit {
           el.name = el.description.name;
         });
         this.products = [...products];
-        this.source.load(products);
+        this.filteredProducts = [...products];
+        this.applySearch();
         this.loadingList = false;
       });
 
@@ -266,5 +269,25 @@ export class ProductsListComponent implements OnInit {
     } else {
       this.router.navigate(['pages/catalogue/products/product/' + e.data.id]);
     }
+  }
+
+  onSearch() {
+    this.applySearch();
+  }
+
+  applySearch() {
+    if (!this.searchTerm || this.searchTerm.trim() === '') {
+      this.filteredProducts = [...this.products];
+    } else {
+      const term = this.searchTerm.toLowerCase().trim();
+      this.filteredProducts = this.products.filter(product => {
+        const name = product.name?.toLowerCase() || '';
+        const sku = product.sku?.toLowerCase() || '';
+        const description = product.description?.description?.toLowerCase() || '';
+        
+        return name.includes(term) || sku.includes(term) || description.includes(term);
+      });
+    }
+    this.source.load(this.filteredProducts);
   }
 }

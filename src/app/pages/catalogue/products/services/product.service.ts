@@ -18,8 +18,8 @@ export class ProductService {
   }
 
   getListOfProducts(params): Observable<any> {
-    //release 3.2.1 use V2
-    return this.crudService.get(`/v2/products`, params);
+    //use v1 for compatibility with backend
+    return this.crudService.get(`/v1/products`, params);
   }
 
   updateProductFromTable(id, product): Observable<any> {

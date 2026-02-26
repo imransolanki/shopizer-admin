@@ -8,6 +8,16 @@
 
       <form class="form-inline filter_section">
         <div class="filter_left_section">
+          <div class="search-container">
+            <input 
+              type="text" 
+              class="form-control search-input" 
+              [(ngModel)]="searchTerm" 
+              (input)="onSearch()"
+              name="searchTerm"
+              placeholder="{{ 'PRODUCT.SEARCH_PLACEHOLDER' | translate }}"
+            />
+          </div>
         </div>
         <div class="filter_right_section">
           <ngx-store-autocomplete (onStore)="choseStore($event)"></ngx-store-autocomplete>
